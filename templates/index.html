@@ -8,7 +8,7 @@
       <div>
          {% if img %}
          <h3>Your Image</h3>
-         <img src="data:image/jpeg;base64,{{ image }}" />
+         <img src="{{ image }}" />
          {% else %}
          <h1>Image will be render here...</h1>
          {% endif %}

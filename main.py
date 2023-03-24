@@ -42,7 +42,7 @@ async def homepage(request: Request):
 async def process_image(request: Request, file: UploadFile = File()):
     image = file.file.read()
     file.file.close()
-    image = decode_image(image)
+    print(image)
     edges = apply_canny(image)
     processed_image = encode_image(edges)
 
