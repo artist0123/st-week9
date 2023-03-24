@@ -45,7 +45,7 @@ async def process_image(request: Request, file: UploadFile = File()):
 
     image = "data:image/jpeg;base64," + base64.b64encode(data).decode("utf-8")
     decoded = decode_image(image)
-    edges = apply_canny(image)
+    edges = apply_canny(decoded)
     processed_image = encode_image(edges)
 
     return templates.TemplateResponse("index.html", {"request": request, "image": image, "processed_image": processed_image})
