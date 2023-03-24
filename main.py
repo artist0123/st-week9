@@ -40,9 +40,11 @@ async def homepage(request: Request):
 
 @app.post("/process-image")
 async def process_image(request: Request, file: UploadFile = File()):
+    #Read uploaded file as byte
     data = file.file.read()
     file.file.close()
 
+    #Encode byte to base64
     image = "data:image/jpeg;base64," + base64.b64encode(data).decode("utf-8")
     decoded = decode_image(image)
     edges = apply_canny(decoded)
