@@ -42,11 +42,11 @@ async def homepage(request: Request):
 async def process_image(request: Request, file: UploadFile = File()):
     image = file.file.read()
     file.file.close()
-    encoded_image = base64.b64encode(image).decode("utf-8")
-    edges = apply_canny(encoded_image)
+    image = decode_image(image)
+    edges = apply_canny(image)
     processed_image = encode_image(edges)
 
-    return templates.TemplateResponse("index.html", {"request": request, "image": encoded_image, "processed_image": processed_image})
+    return templates.TemplateResponse("index.html", {"request": request, "image": image, "processed_image": processed_image})
 
 
 
