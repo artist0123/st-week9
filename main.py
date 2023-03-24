@@ -6,7 +6,6 @@ import numpy as np
 import cv2
 import base64
 
-#uvicorn main:app --host 0.0.0.0 --port 80
 
 app = FastAPI()
 
@@ -36,8 +35,9 @@ def apply_canny(image):
     return edges
 
 
-# @app.get("/")
-# async def homepage():
+@app.get("/", response_class=HTMLResponse)
+async def homepage(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/process-image")
