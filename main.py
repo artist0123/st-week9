@@ -40,11 +40,13 @@ async def homepage(request: Request):
 
 @app.post("/process-image")
 async def process_image(request: Request, file: UploadFile = File()):
-    image = file.file.read()
+    data = file.file.read()
     file.file.close()
+
+    image = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
     edges = apply_canny(image)
-    image = encode_image(image)
     processed_image = encode_image(edges)
+    image = encode_image(image)
 
     return templates.TemplateResponse("index.html", {"request": request, "image": image, "processed_image": processed_image})
 
