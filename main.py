@@ -14,9 +14,6 @@ templates = Jinja2Templates(directory="templates")
 
 class ImageRequest(BaseModel):
     image: str
-    name: str
-    surname: str
-    numbers: list[int]
 
 
 # encode image as base64 string
@@ -42,15 +39,15 @@ async def homepage(request: Request):
 
 
 @app.post("/process-image")
-async def process_image(image_request: ImageRequest):
-    image = decode_image(image_request.image)
-    edges = apply_canny(image)
+async def process_image(request: Request, file: UploadFile = File()):
+    image = file.file.read()
+    file.file.close()
+    encoded_image = base64.b64encode(image).decode("utf-8")
+    edges = apply_canny(encoded_image)
     processed_image = encode_image(edges)
 
-    return {"name": image_request.name,
-            "surname": image_request.surname,
-            "numbers": image_request.numbers,
-            "processed_image": processed_image}
+    return templates.TemplateResponse("index.html", {"request": request, "image": encoded_image, "processed_image": processed_image})
+
 
 
 

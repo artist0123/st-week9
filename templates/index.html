@@ -6,10 +6,20 @@
       </form>
 
       <div>
-        Your pic
+         {% if img %}
+         <h3>Your Image</h3>
+         <img src="data:image/jpeg;base64,{{ image }}" />
+         {% else %}
+         <h1>Image will be render here...</h1>
+         {% endif %}
       </div>
       <div>
-        return
+         {% if img %}
+         <h3>Processed Image</h3>
+         <img src="{{ processed_image }}" />
+         {% else %}
+         <h1>Image will be render here...</h1>
+         {% endif %}
       </div>
    </body>
 </html>
