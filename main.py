@@ -42,8 +42,8 @@ async def homepage(request: Request):
 async def process_image(request: Request, file: UploadFile = File()):
     image = file.file.read()
     file.file.close()
-    print(image)
     edges = apply_canny(image)
+    image = encode_image(image)
     processed_image = encode_image(edges)
 
     return templates.TemplateResponse("index.html", {"request": request, "image": image, "processed_image": processed_image})
