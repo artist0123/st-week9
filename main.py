@@ -43,13 +43,10 @@ async def process_image(request: Request, file: UploadFile = File()):
     data = file.file.read()
     file.file.close()
 
-    # image = cv2.imread(data)
-    # image = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
-    # edges = apply_canny(image)
-    # processed_image = encode_image(edges)
-    # image = encode_image(image)
     image = "data:image/jpeg;base64," + base64.b64encode(data).decode("utf-8")
-    processed_image = image
+    decoded = decode_image(image)
+    edges = apply_canny(image)
+    processed_image = encode_image(edges)
 
     return templates.TemplateResponse("index.html", {"request": request, "image": image, "processed_image": processed_image})
 
